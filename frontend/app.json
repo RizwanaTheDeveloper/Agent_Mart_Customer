@@ -42,6 +42,12 @@
       "expo-secure-store",
       "expo-sharing",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d6a9a5e1-2fd0-4c6b-9b19-f683c9c2ec1b"
+      }
+    },
+    "owner": "rizwana_shaik"
   }
 }
