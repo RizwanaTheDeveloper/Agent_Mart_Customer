@@ -1,0 +1,2 @@
+// Prisma 6 starter: datasource URL is configured in prisma/schema.prisma.
+export {};

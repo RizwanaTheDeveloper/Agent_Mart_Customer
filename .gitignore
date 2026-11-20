@@ -1,9 +1,6 @@
 node_modules/
 dist/
+.expo/
 .env
 .env.local
-.expo/
-.devdb/
-*.tsbuildinfo
-coverage/
-.claude/
+*.log

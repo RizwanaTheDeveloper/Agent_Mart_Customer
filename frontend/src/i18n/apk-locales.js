@@ -1,0 +1,1008 @@
+window.CRDA_SNAPSHOT = {
+  "fetchedAt": "2026-11-09T11:41:43.397948+00:00",
+  "source": "https://gis.apcrda.org/server/rest/services/LSP19Aug2026/MapServer/0/query",
+  "features": [{
+    "attributes": {
+      "objectid": 1,
+      "plot_code": "13-535-2974-11-C18",
+      "plot_no": 11,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 1000.00072675,
+      "area_sqm": 836.12800002,
+      "rd_width_m": 0,
+      "township": 13,
+      "colony": 535,
+      "block": 2974,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Thullur",
+      "lpsvillage": "Thullur",
+      "rs_no": "298,297",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.50347127,
+      "longitude": 80.45437705
+    },
+    "geometry": {
+      "rings": [[[80.45452730129747, 16.503353568658103], [80.45422746380117, 16.50335278611459], [80.4542268012914, 16.50358898106272], [80.45452663915164, 16.503589763618056], [80.45452730129747, 16.503353568658103]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 2,
+      "plot_code": "9-450-2965-24-C5",
+      "plot_no": 24,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 600.00127321,
+      "area_sqm": 501.67749999,
+      "rd_width_m": 0,
+      "township": 9,
+      "colony": 450,
+      "block": 2965,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Thullur",
+      "lpsvillage": "Thullur",
+      "rs_no": "114,115",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.50805439,
+      "longitude": 80.47098887
+    },
+    "geometry": {
+      "rings": [[[80.47110623944504, 16.507963989227818], [80.47087198520926, 16.50796339631764], [80.47087149177308, 16.508144794708624], [80.47110574622728, 16.508145387625678], [80.47110623944504, 16.507963989227818]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 3,
+      "plot_code": "9-444-2933-9-B5",
+      "plot_no": 9,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 359.9985663,
+      "area_sqm": 301.0046625,
+      "rd_width_m": 0,
+      "township": 9,
+      "colony": 444,
+      "block": 2933,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Thullur",
+      "lpsvillage": "Thullur",
+      "rs_no": "207",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.5097244,
+      "longitude": 80.46216463
+    },
+    "geometry": {
+      "rings": [[[80.46226783278587, 16.509721264714205], [80.46226799416512, 16.50966289344981], [80.46206161467845, 16.509662362329884], [80.46206127299683, 16.509785901712494], [80.46226765261456, 16.509786432836613], [80.46226783278587, 16.509721264714205]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 4,
+      "plot_code": "17-633-2473-45-B1",
+      "plot_no": 45,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 249.99771496,
+      "area_sqm": 209.02993751,
+      "rd_width_m": 0,
+      "township": 17,
+      "colony": 633,
+      "block": 2473,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Venkatapalem",
+      "lpsvillage": "Venkatapalem",
+      "rs_no": "265/6",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.49077725,
+      "longitude": 80.53065511
+    },
+    "geometry": {
+      "rings": [[[80.53073664079493, 16.490723054488836], [80.53057384703654, 16.490722689262675], [80.53057358488216, 16.49083144124339], [80.53073637873146, 16.49083180647209], [80.53073664079493, 16.490723054488836]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 5,
+      "plot_code": "25-778-4652-16-C9",
+      "plot_no": 16,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 719.99793988,
+      "area_sqm": 602.00999998,
+      "rd_width_m": 0,
+      "township": 25,
+      "colony": 778,
+      "block": 4652,
+      "district": "Guntur",
+      "mandal": "Mangalagiri",
+      "village": "Nowlur-1",
+      "lpsvillage": "Nowlur",
+      "rs_no": "13",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.45690906,
+      "longitude": 80.54655556
+    },
+    "geometry": {
+      "rings": [[[80.54667291383215, 16.456800469328577], [80.54643871843652, 16.456799962639963], [80.54643835306672, 16.456957176351292], [80.54643821253882, 16.4570176431627], [80.54667240819566, 16.45701814985839], [80.54667291383215, 16.456800469328577]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 6,
+      "plot_code": "6-341-2122-15-C5",
+      "plot_no": 15,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 600.00428438,
+      "area_sqm": 501.68001771,
+      "rd_width_m": 0,
+      "township": 6,
+      "colony": 341,
+      "block": 2122,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Lingayapalem",
+      "lpsvillage": "Lingayapalem",
+      "rs_no": "1,37,38",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.54129603,
+      "longitude": 80.49938522
+    },
+    "geometry": {
+      "rings": [[[80.49950823217749, 16.54120978555964], [80.49926266251765, 16.54120919632615], [80.49926261029384, 16.541229440518265], [80.49926221604426, 16.541382267670237], [80.49950778592304, 16.541382856910232], [80.49950823217749, 16.54120978555964]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 7,
+      "plot_code": "13-535-2970-5-C18",
+      "plot_no": 5,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 1000.00072675,
+      "area_sqm": 836.12800002,
+      "rd_width_m": 0,
+      "township": 13,
+      "colony": 535,
+      "block": 2970,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Thullur",
+      "lpsvillage": "Thullur",
+      "rs_no": "293",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.50471788,
+      "longitude": 80.45407371
+    },
+    "geometry": {
+      "rings": [[[80.45422396484169, 16.504600175426063], [80.45392412543957, 16.5045993923901], [80.45392346250868, 16.50483558729813], [80.45422330227474, 16.504836370345913], [80.45422396484169, 16.504600175426063]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 8,
+      "plot_code": "16-594-2039-70-A3",
+      "plot_no": 70,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 179.996495,
+      "area_sqm": 150.5,
+      "rd_width_m": 0,
+      "township": 16,
+      "colony": 594,
+      "block": 2039,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Malkapuram",
+      "lpsvillage": "Malkapuram",
+      "rs_no": "35",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.50798666,
+      "longitude": 80.52080809
+    },
+    "geometry": {
+      "rings": [[[80.52087380612716, 16.50793821812932], [80.52074262276308, 16.507937917367904], [80.52074238334221, 16.50803509372808], [80.52087356677181, 16.508035394491362], [80.52087380612716, 16.50793821812932]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 9,
+      "plot_code": "27-811-4022-12-C31",
+      "plot_no": 12,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 1380.00023745,
+      "area_sqm": 1153.85600001,
+      "rd_width_m": 0,
+      "township": 27,
+      "colony": 811,
+      "block": 4022,
+      "district": "Guntur",
+      "mandal": "Mangalagiri",
+      "village": "Nidamarru",
+      "lpsvillage": "Nidamarru",
+      "rs_no": "235,237",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.4257154,
+      "longitude": 80.53185886
+    },
+    "geometry": {
+      "rings": [[[80.53199438570512, 16.42553490285518], [80.53172420174668, 16.425534300374345], [80.53172333587403, 16.425895890243055], [80.53199352033202, 16.42589649273788], [80.5319941489412, 16.42563383384833], [80.53199438570512, 16.42553490285518]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 10,
+      "plot_code": "23-751-3724-19-C12",
+      "plot_no": 19,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 810.00288494,
+      "area_sqm": 677.2656,
+      "rd_width_m": 0,
+      "township": 23,
+      "colony": 751,
+      "block": 3724,
+      "district": "Guntur",
+      "mandal": "Mangalagiri",
+      "village": "Kuragallu",
+      "lpsvillage": "Kuragallu",
+      "rs_no": "74",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.44598404,
+      "longitude": 80.51039216
+    },
+    "geometry": {
+      "rings": [[[80.51054179221182, 16.446080050311647], [80.51054227170314, 16.445888729555833], [80.51024251991656, 16.44588802972182], [80.51024231589342, 16.445969387029294], [80.51024204012937, 16.446079351373015], [80.51054179221182, 16.446080050311647]]]
+    }
+  }, {
+    "attributes": {
+      "objectid": 11,
+      "plot_code": "6-344-2148-50-C5",
+      "plot_no": 50,
+      "lu_desc": "R3-Residential Returnable",
+      "extn_sqyrd": 600.00392184,
+      "area_sqm": 501.67971458,
+      "rd_width_m": 0,
+      "township": 6,
+      "colony": 344,
+      "block": 2148,
+      "district": "Guntur",
+      "mandal": "Thullur",
+      "village": "Lingayapalem",
+      "lpsvillage": "Lingayapalem",
+      "rs_no": "48",
+      "zoning": "R3-Medium to high density zone",
+      "latitude": 16.53649922,
+      "longitude": 80.50822114
+    },
+    "geometry": {
+      "rings": [[[80.50833999019662, 16.53643387204402], [80.50834005070085, 16.536409977616042], [80.50810267474539, 16.536409418240268], [80.50810222116459, 16.53658845966133], [80.50833959733893, 16.536589019043497], [80.50833999019662, 16.53643387204402]]]
+    }
+  }]
+};
+window.DILIGENCE_SAMPLES = {
+  "Plot": {
+    "schema": "agentmart.diligence.sample.v1",
+    "is_synthetic": true,
+    "provider_connected": false,
+    "legal_verdict": "Review required - sample only",
+    "confidence": null,
+    "notice": "Fictional UI/developer sample. No Landeed, government, court, lender or map-provider record was retrieved for this sample.",
+    "coverage": {
+      "period_requested": "2000-01-01 to 2026-11-01",
+      "period_returned_in_sample": "2011-01-01 to 2026-11-01",
+      "unsearched_period": "2000-01-01 to 2010-12-31",
+      "litigation": "not_searched",
+      "cersai": "not_searched",
+      "physical_survey": "not_done"
+    },
+    "id": "demo-plot-report",
+    "asset_type": "Plot",
+    "identity": {
+      "plot_code": "DEMO-AP-PLOT-001",
+      "survey": "DEMO-SURVEY-001",
+      "district": "Demo District, AP",
+      "village": "Demo Village",
+      "area_sq_yd": 200,
+      "source_state": "synthetic"
+    },
+    "documents": [{
+      "id": "demo-ec",
+      "type": "EC",
+      "number": "DEMO-EC-001",
+      "is_synthetic": true,
+      "source_office": "Demo SRO",
+      "page_count": 3
+    }, {
+      "id": "demo-deed",
+      "type": "Deed",
+      "number": "DEMO-DEED-001",
+      "is_synthetic": true,
+      "source_office": "Demo SRO",
+      "page_count": 8
+    }],
+    "sections": [{
+      "key": "identity",
+      "title": "Parcel identity",
+      "status": "Sample comparison",
+      "summary": "Plot, survey and village identifiers must match across records.",
+      "findings": [{
+        "text": "Sample extent is 200 sq yd. Seller input and sample deed extent agree.",
+        "source_id": "demo-deed",
+        "page": 2,
+        "severity": "information"
+      }]
+    }, {
+      "key": "ownership",
+      "title": "Ownership & transfer chain",
+      "status": "Partial chain",
+      "summary": "A complete chain has not been established.",
+      "findings": [{
+        "text": "The sample chain starts in 2011; earlier requested records are missing.",
+        "source_id": "demo-deed",
+        "page": 1,
+        "severity": "review"
+      }]
+    }, {
+      "key": "charges",
+      "title": "Registered charges",
+      "status": "Review required",
+      "summary": "A mortgage example has no matching release document in this synthetic set.",
+      "findings": [{
+        "text": "Illustrative registered mortgage entry; release not supplied. This is not a real loan or lien.",
+        "source_id": "demo-ec",
+        "page": 2,
+        "severity": "concern"
+      }]
+    }, {
+      "key": "landuse",
+      "title": "Land use & planning",
+      "status": "Source missing",
+      "summary": "Seller calls the plot residential; a conversion or applicable planning record is not supplied.",
+      "findings": []
+    }, {
+      "key": "litigation",
+      "title": "Court / charge searches",
+      "status": "Not searched",
+      "summary": "No litigation, CERSAI or ROC checks have been performed. Do not display \"No cases\".",
+      "findings": []
+    }, {
+      "key": "boundary",
+      "title": "Area, boundary & access",
+      "status": "Site check pending",
+      "summary": "A map pin is not a physical boundary survey or evidence of legal road access.",
+      "findings": []
+    }, {
+      "key": "price",
+      "title": "Price & investment context",
+      "status": "No real comparables",
+      "summary": "Keep seller asking price, guideline value, recorded consideration and investment scenarios separate.",
+      "findings": []
+    }]
+  },
+  "Apartment": {
+    "schema": "agentmart.diligence.sample.v1",
+    "is_synthetic": true,
+    "provider_connected": false,
+    "legal_verdict": "Review required - sample only",
+    "confidence": null,
+    "notice": "Fictional UI/developer sample. No Landeed, government, court, lender or map-provider record was retrieved for this sample.",
+    "coverage": {
+      "period_requested": "2000-01-01 to 2026-11-01",
+      "period_returned_in_sample": "2011-01-01 to 2026-11-01",
+      "unsearched_period": "2000-01-01 to 2010-12-31",
+      "litigation": "not_searched",
+      "cersai": "not_searched",
+      "physical_survey": "not_done"
+    },
+    "id": "demo-flat-report",
+    "asset_type": "Apartment",
+    "identity": {
+      "project": "Demo Garden Residences",
+      "rera": "DEMO-RERA-0000",
+      "area_basis": "Seller-described super built-up",
+      "listed_sq_ft": 1450,
+      "sample_carpet_sq_ft": 1100,
+      "floor": 4,
+      "source_state": "synthetic"
+    },
+    "documents": [{
+      "id": "demo-agreement",
+      "type": "Sale agreement",
+      "number": "DEMO-AGR-001",
+      "is_synthetic": true,
+      "source_office": "Demo input document",
+      "page_count": 12
+    }, {
+      "id": "demo-plan",
+      "type": "Plan extract",
+      "number": "DEMO-PLAN-001",
+      "is_synthetic": true,
+      "source_office": "Demo input document",
+      "page_count": 2
+    }],
+    "sections": [{
+      "key": "identity",
+      "title": "Flat & project identity",
+      "status": "Sample comparison",
+      "summary": "Match project, unit description, floor and linked land parcel before drawing conclusions.",
+      "findings": []
+    }, {
+      "key": "area",
+      "title": "Carpet area & price basis",
+      "status": "Potential discrepancy",
+      "summary": "Seller carpet-area input differs from the synthetic agreement by 150 sq ft.",
+      "findings": [{
+        "text": "Sample agreement: 1,100 sq ft; separate seller claim: 1,250 sq ft. Resolve the discrepancy.",
+        "source_id": "demo-agreement",
+        "page": 4,
+        "severity": "concern"
+      }]
+    }, {
+      "key": "rera",
+      "title": "RERA & building approvals",
+      "status": "Not verified",
+      "summary": "The sample RERA string is not a valid registration result. Approved plan, CC and OC must be obtained where applicable.",
+      "findings": [{
+        "text": "Occupancy certificate is not supplied in this sample.",
+        "source_id": null,
+        "page": null,
+        "severity": "review"
+      }]
+    }, {
+      "key": "rights",
+      "title": "UDS, parking & common rights",
+      "status": "Review required",
+      "summary": "Seller claims two parking spaces; the sample agreement describes one.",
+      "findings": [{
+        "text": "Resolve the count and nature of parking rights using the actual agreement and approved plan.",
+        "source_id": "demo-agreement",
+        "page": 7,
+        "severity": "review"
+      }]
+    }, {
+      "key": "charges",
+      "title": "Project / unit encumbrances",
+      "status": "Not searched",
+      "summary": "A project-level search must not be assumed to establish the unit-specific position.",
+      "findings": []
+    }, {
+      "key": "outgoings",
+      "title": "Maintenance & readiness",
+      "status": "Seller supplied",
+      "summary": "Maintenance, possession, lifts, water, power backup and amenities need current confirmation.",
+      "findings": []
+    }, {
+      "key": "price",
+      "title": "Comparables & ownership costs",
+      "status": "No real comparables",
+      "summary": "Compare like-for-like carpet area, stage, age, floor and locality; do not treat a quoted rent as guaranteed income.",
+      "findings": []
+    }]
+  }
+};
+window.PROPERTY_SCHEMA43 = {
+  "listingSchema": {
+    "label": "Listing schema",
+    "kind": "text",
+    "group": "internal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "state": {
+    "label": "State",
+    "kind": "select",
+    "group": "location",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": true,
+    "options": ["Andhra Pradesh", "Telangana", "Other"]
+  },
+  "address": {
+    "label": "Address / locality details",
+    "kind": "text",
+    "group": "location",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": true
+  },
+  "pincode": {
+    "label": "PIN code",
+    "kind": "text",
+    "group": "location",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": true
+  },
+  "landmark": {
+    "label": "Nearby landmark",
+    "kind": "text",
+    "group": "location",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "listedBy": {
+    "label": "Listed by",
+    "kind": "select",
+    "group": "contact",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": true,
+    "options": ["Property owner", "Authorized agent", "Builder / developer", "Real estate firm"]
+  },
+  "ownershipType": {
+    "label": "Ownership type",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Freehold", "Leasehold", "Other"]
+  },
+  "priceNegotiable": {
+    "label": "Price negotiable",
+    "kind": "select",
+    "group": "price",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Yes", "No"]
+  },
+  "availableFrom": {
+    "label": "Available from",
+    "kind": "date",
+    "group": "price",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "deposit": {
+    "label": "Rental security deposit (INR)",
+    "kind": "number",
+    "group": "price",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "maintenance": {
+    "label": "Monthly maintenance (INR)",
+    "kind": "number",
+    "group": "price",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "expectedRent": {
+    "label": "Seller-quoted monthly rent (INR)",
+    "kind": "number",
+    "group": "price",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "areaBasis": {
+    "label": "Listed area basis",
+    "kind": "select",
+    "group": "core",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": true,
+    "options": ["Plot / land area", "Carpet area", "Built-up area", "Super built-up area"]
+  },
+  "projectName": {
+    "label": "Project name",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "builder": {
+    "label": "Builder / developer",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "tower": {
+    "label": "Tower / block",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "unitNumber": {
+    "label": "Unit / door number",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "floorLabel": {
+    "label": "Floor label (Ground / B1 etc.)",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "constructionStatus": {
+    "label": "Construction / possession stage",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "options": ["Not supplied", "Ready", "Under construction", "Proposed"]
+  },
+  "possessionDate": {
+    "label": "Seller-stated possession date",
+    "kind": "date",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "carpetArea": {
+    "label": "Carpet area (sq ft)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "unit": "sq ft"
+  },
+  "builtUpArea": {
+    "label": "Built-up area (sq ft)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "unit": "sq ft"
+  },
+  "superArea": {
+    "label": "Super built-up area (sq ft)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "unit": "sq ft"
+  },
+  "baths": {
+    "label": "Bathrooms",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "balconies": {
+    "label": "Balconies",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "floor": {
+    "label": "Floor number",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "totalFloors": {
+    "label": "Total floors",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "age": {
+    "label": "Building age (years)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "parking": {
+    "label": "Parking spaces claimed",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "lifts": {
+    "label": "Lifts claimed",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false
+  },
+  "uds": {
+    "label": "Undivided land share (sq yd)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "unit": "sq yd"
+  },
+  "furnishing": {
+    "label": "Furnishing",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "options": ["Not supplied", "Unfurnished", "Semi furnished", "Furnished"]
+  },
+  "lengthM": {
+    "label": "Plot length (m)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land"],
+    "required": false,
+    "unit": "m"
+  },
+  "widthM": {
+    "label": "Plot width (m)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land"],
+    "required": false,
+    "unit": "m"
+  },
+  "plotAreaSqYd": {
+    "label": "Land / house plot area (sq yd)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land"],
+    "required": false,
+    "unit": "sq yd"
+  },
+  "landUse": {
+    "label": "Seller-stated land use",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land", "Commercial"],
+    "required": false
+  },
+  "roadStatus": {
+    "label": "Road formation / current condition",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land", "Commercial"],
+    "required": false
+  },
+  "boundary": {
+    "label": "Boundary / survey status",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land"],
+    "required": false
+  },
+  "cornerPlot": {
+    "label": "Corner plot",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Yes", "No"]
+  },
+  "openSides": {
+    "label": "Open sides",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Plot", "House", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "1", "2", "3", "4"]
+  },
+  "water": {
+    "label": "Water supply statement",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "power": {
+    "label": "Power / backup statement",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "drainage": {
+    "label": "Drainage statement",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "commercialType": {
+    "label": "Commercial category",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Commercial"],
+    "required": false,
+    "options": ["Not supplied", "Office", "Shop / retail", "Showroom", "Warehouse", "Industrial"]
+  },
+  "frontageM": {
+    "label": "Frontage (m)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Commercial"],
+    "required": false
+  },
+  "ceilingHeightM": {
+    "label": "Ceiling height (m)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Commercial"],
+    "required": false
+  },
+  "powerLoadKW": {
+    "label": "Power load (kW)",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Commercial"],
+    "required": false
+  },
+  "loadingAccess": {
+    "label": "Loading / goods access",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Commercial"],
+    "required": false,
+    "options": ["Not supplied", "Yes", "No"]
+  },
+  "fireNoc": {
+    "label": "Fire NOC reference",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Commercial"],
+    "required": false
+  },
+  "cropType": {
+    "label": "Current crop / land use",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Farm land"],
+    "required": false
+  },
+  "irrigation": {
+    "label": "Irrigation",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Borewell", "Canal", "Rainfed", "Drip", "Other"]
+  },
+  "soilType": {
+    "label": "Seller-stated soil type",
+    "kind": "text",
+    "group": "specific",
+    "types": ["Farm land"],
+    "required": false
+  },
+  "borewells": {
+    "label": "Borewells claimed",
+    "kind": "number",
+    "group": "specific",
+    "types": ["Farm land"],
+    "required": false
+  },
+  "tenancyStatus": {
+    "label": "Cultivation / tenancy status",
+    "kind": "select",
+    "group": "specific",
+    "types": ["Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Owner cultivated", "Leased", "Vacant"]
+  },
+  "approvalAuthority": {
+    "label": "Approval authority",
+    "kind": "text",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "rera": {
+    "label": "RERA reference",
+    "kind": "text",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "oc": {
+    "label": "Occupancy certificate availability",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "cc": {
+    "label": "Completion certificate availability",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Apartment", "House", "Commercial"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "titleDocStatus": {
+    "label": "Title document status",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "ecStatus": {
+    "label": "Encumbrance certificate status",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "revenueRecordStatus": {
+    "label": "Revenue record status",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "layoutApprovalStatus": {
+    "label": "Layout / plan approval status",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "landConversionStatus": {
+    "label": "Land conversion record status",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "taxReceiptStatus": {
+    "label": "Property tax receipt status",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Not supplied", "Available on request", "Not applicable"]
+  },
+  "mortgageDisclosure": {
+    "label": "Seller mortgage disclosure",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Unknown", "Known charge / mortgage", "No charge claimed"]
+  },
+  "litigationDisclosure": {
+    "label": "Seller dispute disclosure",
+    "kind": "select",
+    "group": "legal",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Unknown", "Known dispute", "No dispute claimed"]
+  },
+  "videoUrl": {
+    "label": "Property video HTTPS link",
+    "kind": "text",
+    "group": "media",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "amenities": {
+    "label": "Amenities",
+    "kind": "list",
+    "group": "amenities",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "geoSource": {
+    "label": "Geotag source",
+    "kind": "select",
+    "group": "geotag",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["GPS", "Map pin", "Manual", "CRDA reference"]
+  },
+  "geoAccuracyM": {
+    "label": "GPS accuracy (m)",
+    "kind": "number",
+    "group": "geotag",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "geoCapturedAt": {
+    "label": "Location capture time",
+    "kind": "text",
+    "group": "geotag",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false
+  },
+  "geotagConfirmed": {
+    "label": "Property pin confirmed",
+    "kind": "select",
+    "group": "geotag",
+    "types": ["Plot", "Apartment", "House", "Commercial", "Farm land"],
+    "required": false,
+    "options": ["Yes", "No"]
+  }
+};

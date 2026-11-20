@@ -1,53 +1,23 @@
 {
   "expo": {
-    "name": "Agent Mart Admin",
-    "slug": "agentmart-platform-admin",
-    "version": "1.0.0",
-    "scheme": "agentmartadmin",
+    "name": "Agent Mart",
+    "slug": "agentmart-customer",
+    "scheme": "agentmartcustomer",
+    "platforms": ["android", "ios", "web"],
     "orientation": "default",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
-    "backgroundColor": "#f4f5f7",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.agentmart.platformadmin",
-      "config": {
-        "usesNonExemptEncryption": false
-      },
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
-    },
-    "android": {
-      "package": "com.agentmart.platformadmin",
-      "adaptiveIcon": {
-        "backgroundColor": "#1f5fbf",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "allowBackup": false,
-      "predictiveBackGestureEnabled": false
+      "bundleIdentifier": "com.agentmart.customer"
     },
     "web": {
-      "name": "Agent Mart Platform Admin",
-      "shortName": "Agent Mart Admin",
-      "favicon": "./assets/favicon.png",
       "bundler": "metro",
-      "output": "single",
-      "themeColor": "#11161f",
-      "backgroundColor": "#f4f5f7"
+      "output": "single"
     },
     "plugins": [
-      "expo-secure-store",
-      "expo-sharing",
-      "expo-font"
+      "expo-router"
     ],
-    "extra": {
-      "eas": {
-        "projectId": "d6a9a5e1-2fd0-4c6b-9b19-f683c9c2ec1b"
-      }
-    },
-    "owner": "rizwana_shaik"
+    "android": {
+      "package": "com.agentmart.customer"
+    }
   }
 }

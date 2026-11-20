@@ -1,98 +1,58 @@
-# Agent Mart | Platform Admin — App
+# Frontend
 
-React Native + Expo (SDK 58) + TypeScript. One codebase runs on **Android, iOS, tablets and the web**, and the layout adapts to each screen size:
+The complete editable source is organized by feature. See [SOURCE_GUIDE.md](SOURCE_GUIDE.md) for the implementation map and build workflow. The APK interface remains HTML/JavaScript/CSS hosted by Expo; its renderers are browser functions rather than native React components.
 
-| Width | Layout |
-|---|---|
-| < 1024 px (phones, portrait tablets) | Top bar with a menu button that opens a slide-out drawer. Record details open as a bottom sheet (phones) or a centred dialog (tablets). |
-| ≥ 1024 px | Fixed sidebar. Record details open in a dialog. |
-| ≥ 1280 px | Fixed sidebar, with record details in a side panel next to the list. |
+Shared Expo / React Native TypeScript code runs on Android, iOS, and web. The app opens `/workspace` with Parcel's redesigned Buyer and Seller / Property owner workspace chooser. `/login` opens the same chooser. `/dashboard` opens the buyer Today demo directly, with no backend, account, or password required. `/seller-dashboard` opens the seller Today demo. The shared document runs in a native WebView or a web iframe. Parcel's new navigation connects existing property filters, saved properties, comparisons, conversations, research tools, firm controls and language selection. Live account and property data are not connected; displayed listings are offline demo records.
 
-Light and dark mode follow the device setting.
+## Run
 
-The app talks only to the real backend in `../backend`. There is no offline mode and no built-in sample data.
+For a physical phone using Expo Go, run `npm run start:go`. This rebuilds the document, clears Metro's cache, and explicitly selects Expo Go over LAN. Keep the terminal running, connect the phone to the same network, and scan the newly generated QR code rather than opening an old recent-project link.
 
-## Run locally
+This frontend uses Expo SDK 58 and React Native 0.88.1. Use Expo Go with SDK 58 support (including client 58.0.5).
 
-```powershell
-# 1. Start the backend first (see ../backend/README.md)
-cd frontend
+If Expo Go reports `Failed to download remote update`, open the terminal's `http://<computer-IP>:8081/status` address in the phone's browser. `packager-status:running` confirms that the server is reachable. Stop any Metro server started before the SDK upgrade, run `npm run start:go`, and scan its new QR code.
+
+
+```sh
 npm install
-copy .env.example .env      # set EXPO_PUBLIC_API_URL if the API is not on localhost:3000
-
-npm run web                 # browser
-npm run android             # Android emulator / device (Expo Go or dev build)
-npm run ios                 # iOS simulator (macOS only)
+npm run android
+npm run ios
+npm run web
 ```
 
-| Where the app runs | `EXPO_PUBLIC_API_URL` |
-|---|---|
-| Browser on the same PC | `http://localhost:3000` |
-| Android emulator | `http://10.0.2.2:3000` |
-| Physical phone (same Wi-Fi) | `http://<PC LAN IP>:3000`, and allow port 3000 in the Windows firewall |
+Run one platform command at a time. The local iOS simulator requires macOS and Xcode. From Windows, open the development server in a compatible Expo Go app on an iPhone, or use an EAS iOS build with Apple signing configured.
 
-For the web app, also add its origin to the backend's `CORS_ORIGINS`, for example `http://localhost:8081`.
+## Code locations
 
-## Production builds
+- `src/hooks/useResponsive.ts`: live viewport sizes, gutters, and breakpoints: phone below 768, tablet 768â€“1023, desktop 1024 and above.
+- `src/components/layout/ScreenContainer.tsx`: safe areas, scrolling, iOS keyboard avoidance, and centered maximum content widths (560 for forms, 800 for reading, 1200 for wide layouts).
+- `src/components/layout/ResponsiveGrid.tsx`: one, two, or three columns; uses one column for large accessibility font sizes. Use inside the wide screen container.
+- `src/components/layout/ResponsiveTabs.tsx`: bottom navigation on phones/tablets and a left navigation rail on desktop. Both buyer and seller tab layouts use it.
+- `src/components/common`: reusable inputs, buttons, loading, error, and empty states, with wrapping text and minimum 48-point input/button heights.
+- `src/theme`: shared colors, spacing, and typography.
+- `src/features/auth/LoginScreen.tsx`: redirects to the workspace chooser without collecting credentials.
+- `src/features`: complete browser implementations and named React entry screens, organized by feature.
+- `src/components/properties`, `src/services`, `src/store`, `src/demo`: property renderers, existing APK operations, device/session state, and fictional records.
+- `src/theme/apk.css` and `src/i18n/apk-locales.js`: complete APK styling and localized property schema.
+- `src/features/apk`: document builder, native/web hosts, and ordered source manifest.
+- `assets/apk`: unchanged APK comparison reference. Edit the files listed in `src/features/apk/source-manifest.json`, then run `npm run build:apk-assets` to regenerate the embedded document. Start commands do this automatically; repeat the build after source edits when Metro is already running.
+- `src/features/buyer/dashboard/`: dashboard entry component and full dashboard JavaScript implementation.
+- `src/app`: Expo routes mapped to the corresponding APK screens.
 
-- **Web:** run `npm run build:web`, which writes a static site to `dist-web/`. Host it on any static host or CDN. If you serve it from the API's domain, `EXPO_PUBLIC_API_URL` can be left unset.
-- **Android / iOS:** use EAS. First replace the placeholder URLs in [eas.json](eas.json) with your real HTTPS API addresses, then run:
-  ```powershell
-  npx eas-cli@latest build --profile production --platform android   # or ios / all
-  npx eas-cli@latest submit --profile production
-  ```
-  Bundle IDs are `com.agentmart.platformadmin` (iOS and Android) and are set in [app.json](app.json).
-- `EXPO_PUBLIC_API_URL` is compiled into the app, so you need a new build each time it changes. Production builds must use HTTPS.
+Avoid fixed screen heights and widths. Use `variant="form"` on `ScreenContainer` for forms. For virtualized lists, use `scroll={false}` and let the list own scrolling rather than nesting it inside a ScrollView.
 
-## Scripts
+## Review and verification
 
-| Script | Purpose |
-|---|---|
-| `npm run web` / `android` / `ios` | Start the dev server for that platform |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run doctor` | `expo-doctor` (dependency and config checks) |
-| `npm run build:web` | Static production web build |
+Open `/responsive-preview` on web, or the `agentmartcustomer://responsive-preview` deep link on a development build, to review the shared components and open buyer/seller navigation. The preview never sends data.
 
-## Folder structure
-
-```
-frontend/
-├── App.tsx                     # Providers + auth gate + module router
-├── app.json / eas.json         # Expo + EAS build config (bundle IDs, plugins, env per profile)
-└── src/
-    ├── config.ts               # API URL + limits (page size, 750 KB, 100 features, reason ≥ 5)
-    ├── api/
-    │   ├── client.ts           # fetch wrapper: bearer token, timeouts, error mapping, automatic 428 → confirm → retry
-    │   ├── endpoints.ts        # Every backend endpoint, typed
-    │   └── types.ts            # Response shapes (mirror the backend map*() functions)
-    ├── state/
-    │   ├── auth.tsx            # Session: login, restore, expiry timer, revalidate on resume, logout
-    │   ├── elevation.tsx       # Global "Confirm it's you" (password) modal for HTTP 428
-    │   └── toast.tsx           # Notifications
-    ├── navigation/
-    │   ├── AppShell.tsx        # Sidebar (desktop) / drawer (phone), top bar, account menu
-    │   ├── modules.ts          # 15 modules: label, icon, group
-    │   └── useModuleRoute.ts   # Current module; mirrored to URL hash on web, Android back button
-    ├── resources/              # Shared list → detail → action engine
-    │   ├── ResourceScreen.tsx  # Search, pagination, pull-to-refresh, detail panel/sheet
-    │   ├── ActionDialog.tsx    # Audited action with reason / note / status / role
-    │   ├── configs.tsx         # Per-module rows, detail fields and actions (edit here to change UI)
-    │   ├── forms.tsx           # Plan, announcement and administrator create/edit forms
-    │   ├── FirmPlan.tsx        # Plan assignment on the firm detail
-    │   └── Imports.tsx         # File/paste → validate → review errors → commit
-    ├── screens/                # Login, Overview, Reports (chart/table/CSV), Settings
-    ├── components/             # UI kit, reason field
-    ├── theme/theme.ts          # Colours (light/dark), spacing, breakpoints
-    └── utils/                  # Formatting (en-IN, ₹), secure token storage, file pick/save
+```sh
+npm run typecheck
+npx expo install --check
+npx expo export --platform all --max-workers 1
 ```
 
-## Security behaviour
+Check phone widths (320, 390), tablet (768), desktop (1280, 1920), landscape, large system text, browser zoom, and an open keyboard. Confirm content scrolls, fields remain reachable, and navigation updates after resizing. Native bundle export verifies compilation, not device behavior; review Android and iOS on devices before release.
 
-- **Token storage:** the session token is kept in the iOS Keychain / Android Keystore (`expo-secure-store`), or in `sessionStorage` on the web, where it is cleared when the tab closes. It is never written to AsyncStorage.
-- **Session expiry:** sessions follow the server's 2-hour expiry. The app warns 5 minutes before expiry, signs out when the session expires, and re-checks the session whenever it returns from the background.
-- **Sensitive actions:** these get a 428 response from the server. The app shows a password prompt and then retries the original request unchanged.
-- **Permissions:** navigation, buttons and forms follow the `permissions` the server returns. The server enforces them independently, so the UI is only a convenience.
-- **Audit reason:** every change asks for a reason of at least 5 characters, which is stored in the audit log.
+Web hosting must route unknown paths to `index.html` because this app uses single-page output.
 
-> **Note:** sign-in and elevation use password only, with no second factor (authenticator code). This was removed at
-> the user's request; see the note in `../backend/README.md` for what that means and how to restore it.
+Dependencies follow the [Expo Router installation guidance](https://docs.expo.dev/router/installation/).

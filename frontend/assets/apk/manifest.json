@@ -1,0 +1,9 @@
+{
+  "source": "AgentMart_Customer_Managed_v4.5.apk",
+  "sha256": {
+    "index.html": "601405759b145566a4c051f529e04b68ddf10a7762e3139a9b8185a06034ace4",
+    "styles.css": "b8595d0f3319f5cc4e4edf2a5b3a09658c4b107f356d0afd11fd883675bdb7f4",
+    "locales.js": "6e6a6a3b69d95643e80e1e90ab5f6104dfff8d7e9b8b211df22efb6f77c2ec99",
+    "app.js": "d84e4ea53e8b4b4f38543c1af13a53366b836c4546420d0ce1085b9c1cd44bfc"
+  }
+}
