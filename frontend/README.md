@@ -1,58 +1,35 @@
-# Frontend
+﻿# AgentMart frontend
 
-The complete editable source is organized by feature. See [SOURCE_GUIDE.md](SOURCE_GUIDE.md) for the implementation map and build workflow. The APK interface remains HTML/JavaScript/CSS hosted by Expo; its renderers are browser functions rather than native React components.
+Run Expo directly from this folder:
 
-Shared Expo / React Native TypeScript code runs on Android, iOS, and web. The app opens `/workspace` with Parcel's redesigned Buyer and Seller / Property owner workspace chooser. `/login` opens the same chooser. `/dashboard` opens the buyer Today demo directly, with no backend, account, or password required. `/seller-dashboard` opens the seller Today demo. The shared document runs in a native WebView or a web iframe. Parcel's new navigation connects existing property filters, saved properties, comparisons, conversations, research tools, firm controls and language selection. Live account and property data are not connected; displayed listings are offline demo records.
-
-## Run
-
-For a physical phone using Expo Go, run `npm run start:go`. This rebuilds the document, clears Metro's cache, and explicitly selects Expo Go over LAN. Keep the terminal running, connect the phone to the same network, and scan the newly generated QR code rather than opening an old recent-project link.
-
-This frontend uses Expo SDK 58 and React Native 0.88.1. Use Expo Go with SDK 58 support (including client 58.0.5).
-
-If Expo Go reports `Failed to download remote update`, open the terminal's `http://<computer-IP>:8081/status` address in the phone's browser. `packager-status:running` confirms that the server is reachable. Stop any Metro server started before the SDK upgrade, run `npm run start:go`, and scan its new QR code.
-
-
-```sh
-npm install
-npm run android
-npm run ios
-npm run web
+```powershell
+npx.cmd expo start
 ```
 
-Run one platform command at a time. The local iOS simulator requires macOS and Xcode. From Windows, open the development server in a compatible Expo Go app on an iPhone, or use an EAS iOS build with Apple signing configured.
+This starts the single **AgentMart** app and its local seller service. Scan the QR code using Expo Go on the same Wi-Fi. Press `w` for the browser at http://localhost:8081. The opening screen lets you choose Buyer or Seller / Property owner. Ctrl+C stops Expo and the seller service it started. If the seller service was already running, Expo reuses it and leaves it running on exit.
 
-## Code locations
+`npm.cmd run dev` remains an alternative that opens the web preview automatically. From the repository root, `npm.cmd run dev` and `Start-Frontend.cmd` start the same app and service.
 
-- `src/hooks/useResponsive.ts`: live viewport sizes, gutters, and breakpoints: phone below 768, tablet 768â€“1023, desktop 1024 and above.
-- `src/components/layout/ScreenContainer.tsx`: safe areas, scrolling, iOS keyboard avoidance, and centered maximum content widths (560 for forms, 800 for reading, 1200 for wide layouts).
-- `src/components/layout/ResponsiveGrid.tsx`: one, two, or three columns; uses one column for large accessibility font sizes. Use inside the wide screen container.
-- `src/components/layout/ResponsiveTabs.tsx`: bottom navigation on phones/tablets and a left navigation rail on desktop. Both buyer and seller tab layouts use it.
-- `src/components/common`: reusable inputs, buttons, loading, error, and empty states, with wrapping text and minimum 48-point input/button heights.
-- `src/theme`: shared colors, spacing, and typography.
-- `src/features/auth/LoginScreen.tsx`: redirects to the workspace chooser without collecting credentials.
-- `src/features`: complete browser implementations and named React entry screens, organized by feature.
-- `src/components/properties`, `src/services`, `src/store`, `src/demo`: property renderers, existing APK operations, device/session state, and fictional records.
-- `src/theme/apk.css` and `src/i18n/apk-locales.js`: complete APK styling and localized property schema.
-- `src/features/apk`: document builder, native/web hosts, and ordered source manifest.
-- `assets/apk`: unchanged APK comparison reference. Edit the files listed in `src/features/apk/source-manifest.json`, then run `npm run build:apk-assets` to regenerate the embedded document. Start commands do this automatically; repeat the build after source edits when Metro is already running.
-- `src/features/buyer/dashboard/`: dashboard entry component and full dashboard JavaScript implementation.
-- `src/app`: Expo routes mapped to the corresponding APK screens.
+## Project structure
 
-Avoid fixed screen heights and widths. Use `variant="form"` on `ScreenContainer` for forms. For virtualized lists, use `scroll={false}` and let the list own scrolling rather than nesting it inside a ScrollView.
+- `package.json` and `package-lock.json`: Expo dependencies and npm workspace installation.
+- `app.config.js`: AgentMart identity, assets and the existing Router source directory.
+- `metro.config.js`: Expo Metro configuration and development seller-service startup.
+- `buyer/src/`: shared AgentMart app with chooser, account screens, native buyer screens and seller WebView/iframe.
+- `buyer/assets/`: app assets.
+- `seller/`: existing Seller Studio web/API service with its separate React dependencies.
+- `outputs/seller-dev.log`: seller-service logs when started directly with Expo.
 
-## Review and verification
+The Expo app and its `buyer` source package use one hoisted dependency tree. The web seller remains isolated because it uses a different React version. Install with `npm.cmd ci` here, and `npm.cmd --prefix seller ci` for the seller web service. Root `npm.cmd run install:all` also installs the applications.
 
-Open `/responsive-preview` on web, or the `agentmartcustomer://responsive-preview` deep link on a development build, to review the shared components and open buyer/seller navigation. The preview never sends data.
+## Workspaces and data
 
-```sh
-npm run typecheck
-npx expo install --check
-npx expo export --platform all --max-workers 1
-```
+Buyer discovery uses a fictional sample catalogue. Saves, comparison and unsent enquiry drafts stay on this device. Buyer tools include the supplied APK features in an isolated sample workspace; account workflows require a compatible HTTPS API.
 
-Check phone widths (320, 390), tablet (768), desktop (1280, 1920), landscape, large system text, browser zoom, and an open keyboard. Confirm content scrolls, fields remain reachable, and navigation updates after resizing. Native bundle export verifies compilation, not device behavior; review Android and iOS on devices before release.
+Seller uses a WebView on Android/iOS and an iframe on web, served locally on port 5173. Seller records load from the authenticated workspace API. Choose View seller / owner demo for the read-only sample workspace. Seller sign-in uses the existing hosted workspace. Set `EXPO_PUBLIC_SELLER_URL` to use a hosted seller service; local startup is skipped in that case. `SELLER_PORT` changes the local seller port.
 
-Web hosting must route unknown paths to `index.html` because this app uses single-page output.
+For the older standalone seller-only Expo shell, use `npm.cmd run seller:expo`; its source remains in `seller/expo/`. It is not needed for the combined AgentMart app.
 
-Dependencies follow the [Expo Router installation guidance](https://docs.expo.dev/router/installation/).
+## Validation
+
+`npm.cmd run build` exports Android, iOS and web from this folder. In `buyer/`, run `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run verify` and `npm.cmd run verify:responsive`. Browser profiles check layouts and navigation; physical Expo Go testing and signed release builds remain separate.

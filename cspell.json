@@ -1,0 +1,22 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "AgentMart",
+    "Amaravati",
+    "filterbar",
+    "Mandal",
+    "RERA",
+    "topbar"
+  ],
+  "ignoreRegExpList": ["[\\u0900-\\u097F\\u0C00-\\u0C7F]+"],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.next/**",
+    "**/.vinext/**",
+    "**/.expo/**",
+    "**/.wrangler/**",
+    "frontend/buyer/reference/**"
+  ]
+}

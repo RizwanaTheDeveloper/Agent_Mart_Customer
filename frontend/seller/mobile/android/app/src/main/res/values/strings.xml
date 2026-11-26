@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AgentMart Seller Studio</string>
+    <string name="title_activity_main">AgentMart Seller Studio</string>
+    <string name="package_name">com.agentmart.sellerstudio</string>
+    <string name="custom_url_scheme">com.agentmart.sellerstudio</string>
+</resources>

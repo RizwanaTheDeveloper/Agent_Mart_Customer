@@ -1,30 +1,9 @@
 import { PrismaClient } from '@prisma/client';
+import { seedPropertyTypes } from './seeds/property-types.seed.ts';
 
+if (!process.env.DATABASE_URL?.trim()) throw new Error('Set DATABASE_URL before running the PostgreSQL seed.');
 const prisma = new PrismaClient();
-
-async function main() {
-  const emails = [
-    'buyer1@agentmart.test',
-    'buyer2@agentmart.test',
-    'seller1@agentmart.test',
-    'seller2@agentmart.test',
-    'admin@agentmart.test',
-  ];
-
-  for (const email of emails) {
-    await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: { email },
-    });
-  }
-
-  console.log(`Seeded ${emails.length} users`);
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(() => prisma.$disconnect());
+try {
+  await seedPropertyTypes(prisma);
+  console.log('Property reference types seeded. No users, passwords or business records were created.');
+} finally { await prisma.$disconnect(); }

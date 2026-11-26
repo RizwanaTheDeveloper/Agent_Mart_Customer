@@ -7,8 +7,296 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AccountRole {
+  BUYER
+  SELLER
+}
+
+enum WorkspaceRole {
+  OWNER
+  MANAGER
+  AGENT
+  VIEWER
+}
+
+enum PropertyStatus {
+  DRAFT
+  AVAILABLE
+  ON_HOLD
+  SOLD
+  RENTED
+}
+
+enum PropertyPurpose {
+  SALE
+  RENT
+}
+
+enum EnquiryStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CLOSED
+}
+
+enum EnquiryStage {
+  NEW_INTEREST
+  CONTACTED
+  DOCUMENTS_REQUESTED
+  VISIT_PLANNING
+  NEGOTIATION
+  COMPLETED
+  NOT_PROCEEDING
+}
+
+enum VisitStatus {
+  PROPOSED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id                 String             @id @default(uuid()) @db.Uuid
+  email              String             @unique @db.VarChar(254)
+  name               String             @db.VarChar(100)
+  passwordHash       String
+  role               AccountRole        @default(BUYER)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  ownedFirms         Firm[]             @relation("FirmOwner")
+  memberships        FirmMember[]
+  ownedProperties    Property[]         @relation("PropertyOwner")
+  assignedProperties Property[]         @relation("PropertyAssignee")
+  enquiries          Enquiry[]          @relation("BuyerEnquiries")
+  assignedEnquiries  Enquiry[]          @relation("AssignedEnquiries")
+  savedProperties    SavedProperty[]
+  comparisons        ComparedProperty[]
+  drafts             EnquiryDraft[]
+  sessions           RefreshSession[]
+  auditLogs          AuditLog[]
+}
+
+model Firm {
+  id         String       @id @default(uuid()) @db.Uuid
+  name       String       @db.VarChar(100)
+  ownerId    String       @db.Uuid
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  owner      User         @relation("FirmOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  members    FirmMember[]
+  branches   Branch[]
+  properties Property[]
+  enquiries  Enquiry[]
+  documents  Document[]
+  auditLogs  AuditLog[]
+}
+
+model FirmMember {
+  firmId   String        @db.Uuid
+  userId   String        @db.Uuid
+  branchId String?       @db.Uuid
+  role     WorkspaceRole @default(VIEWER)
+  active   Boolean       @default(true)
+  joinedAt DateTime      @default(now())
+  firm     Firm          @relation(fields: [firmId], references: [id], onDelete: Cascade)
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  branch   Branch?       @relation(fields: [branchId, firmId], references: [id, firmId], onDelete: Restrict)
+
+  @@id([firmId, userId])
+  @@index([userId, active])
+}
+
+model Branch {
+  id         String       @id @default(uuid()) @db.Uuid
+  firmId     String       @db.Uuid
+  name       String       @db.VarChar(100)
+  city       String?
+  createdAt  DateTime     @default(now())
+  firm       Firm         @relation(fields: [firmId], references: [id], onDelete: Cascade)
+  members    FirmMember[]
+  properties Property[]
+
+  @@unique([id, firmId])
+  @@index([firmId])
+}
+
+model PropertyType {
+  code       String     @id @db.VarChar(32)
+  name       String     @db.VarChar(100)
+  properties Property[]
+}
+
+model Property {
+  id           String             @id @default(uuid()) @db.Uuid
+  firmId       String             @db.Uuid
+  branchId     String?            @db.Uuid
+  ownerId      String             @db.Uuid
+  assignedToId String?            @db.Uuid
+  typeCode     String             @db.VarChar(32)
+  title        String             @db.VarChar(180)
+  description  String             @default("")
+  purpose      PropertyPurpose
+  status       PropertyStatus     @default(DRAFT)
+  published    Boolean            @default(false)
+  price        Decimal            @db.Decimal(18, 2)
+  area         Decimal            @db.Decimal(18, 4)
+  unit         String             @db.VarChar(20)
+  city         String
+  locality     String
+  facing       String?
+  bedrooms     Int?
+  latitude     Float?
+  longitude    Float?
+  attributes   Json               @default("{}")
+  version      Int                @default(1)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  firm         Firm               @relation(fields: [firmId], references: [id], onDelete: Restrict)
+  branch       Branch?            @relation(fields: [branchId, firmId], references: [id, firmId], onDelete: Restrict)
+  owner        User               @relation("PropertyOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  assignedTo   User?              @relation("PropertyAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  type         PropertyType       @relation(fields: [typeCode], references: [code], onDelete: Restrict)
+  images       PropertyImage[]
+  savedBy      SavedProperty[]
+  comparedBy   ComparedProperty[]
+  drafts       EnquiryDraft[]
+  enquiries    Enquiry[]
+  documents    Document[]
+
+  @@unique([id, firmId])
+  @@index([firmId, status])
+  @@index([published, status, city])
+  @@index([assignedToId])
+}
+
+model PropertyImage {
+  id         String   @id @default(uuid()) @db.Uuid
+  propertyId String   @db.Uuid
+  storageKey String   @unique
+  mimeType   String
+  position   Int      @default(0)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId, position])
+}
+
+model SavedProperty {
+  userId     String   @db.Uuid
+  propertyId String   @db.Uuid
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@id([userId, propertyId])
+}
+
+model ComparedProperty {
+  userId     String   @db.Uuid
+  propertyId String   @db.Uuid
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@id([userId, propertyId])
+}
+
+model EnquiryDraft {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @db.Uuid
+  propertyId String   @db.Uuid
+  message    String   @db.VarChar(2000)
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+
+  @@index([userId, createdAt])
+}
+
+model Enquiry {
+  id           String        @id @default(uuid()) @db.Uuid
+  firmId       String        @db.Uuid
+  propertyId   String        @db.Uuid
+  buyerId      String?       @db.Uuid
+  assignedToId String?       @db.Uuid
+  requestId    String?       @db.VarChar(100)
+  name         String        @db.VarChar(150)
+  email        String?       @db.VarChar(254)
+  phone        String?       @db.VarChar(20)
+  message      String        @db.VarChar(2000)
+  note         String        @default("")
+  status       EnquiryStatus @default(PENDING)
+  stage        EnquiryStage  @default(NEW_INTEREST)
+  nextAt       DateTime?
+  history      Json          @default("[]")
+  messages     Json          @default("[]")
+  version      Int           @default(1)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  firm         Firm          @relation(fields: [firmId], references: [id], onDelete: Restrict)
+  property     Property      @relation(fields: [propertyId, firmId], references: [id, firmId], onDelete: Restrict)
+  buyer        User?         @relation("BuyerEnquiries", fields: [buyerId], references: [id], onDelete: SetNull)
+  assignedTo   User?         @relation("AssignedEnquiries", fields: [assignedToId], references: [id], onDelete: SetNull)
+  visits       SiteVisit[]
+
+  @@unique([id, firmId])
+  @@unique([buyerId, requestId])
+  @@index([firmId, status, nextAt])
+  @@index([assignedToId])
+}
+
+model SiteVisit {
+  id             String      @id @default(uuid()) @db.Uuid
+  firmId         String      @db.Uuid
+  enquiryId      String      @db.Uuid
+  scheduledAt    DateTime
+  status         VisitStatus @default(PROPOSED)
+  buyerConfirmed Boolean     @default(false)
+  note           String      @default("")
+  version        Int         @default(1)
+  enquiry        Enquiry     @relation(fields: [enquiryId, firmId], references: [id, firmId], onDelete: Restrict)
+
+  @@index([firmId, scheduledAt])
+}
+
+model Document {
+  id           String   @id @default(uuid()) @db.Uuid
+  firmId       String   @db.Uuid
+  propertyId   String   @db.Uuid
+  filename     String   @db.VarChar(150)
+  label        String   @db.VarChar(100)
+  mimeType     String
+  size         Int
+  storageKey   String   @unique
+  encryptionIv String?
+  createdAt    DateTime @default(now())
+  firm         Firm     @relation(fields: [firmId], references: [id], onDelete: Restrict)
+  property     Property @relation(fields: [propertyId, firmId], references: [id, firmId], onDelete: Restrict)
+
+  @@index([firmId, propertyId])
+}
+
+model RefreshSession {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  firmId    String   @db.Uuid
+  actorId   String?  @db.Uuid
+  action    String
+  targetId  String?
   createdAt DateTime @default(now())
+  firm      Firm     @relation(fields: [firmId], references: [id], onDelete: Restrict)
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([firmId, createdAt])
 }

@@ -1,45 +1,56 @@
 {
-  "name": "agentmart-customer-frontend",
-  "version": "0.1.0",
+  "name": "agentmart-frontend",
+  "version": "1.0.0",
   "private": true,
-  "main": "expo-router/entry",
-  "scripts": {
-    "start": "expo start",
-    "start:go": "expo start --go --lan --clear",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "typecheck": "tsc --noEmit",
-    "export:web": "expo export --platform web",
-    "build:apk-assets": "node scripts/build-apk-assets.cjs",
-    "prestart": "npm run build:apk-assets",
-    "prestart:go": "npm run build:apk-assets",
-    "preandroid": "npm run build:apk-assets",
-    "preios": "npm run build:apk-assets",
-    "preweb": "npm run build:apk-assets",
-    "preexport:web": "npm run build:apk-assets"
+  "description": "Start AgentMart seller and buyer together",
+  "engines": {
+    "node": ">=22.13.0"
   },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs",
+    "seller:expo": "node scripts/dev.mjs --seller-expo",
+    "seller:expo:web": "node scripts/dev.mjs --seller-expo --web",
+    "install:seller:expo": "npm --prefix seller/expo ci",
+    "seller:expo:build": "npm --prefix seller/expo run build",
+    "seller:expo:typecheck": "npm --prefix seller/expo run typecheck",
+    "seller:expo:lint": "npm --prefix seller/expo run lint",
+    "expo": "expo start",
+    "web": "expo start --web",
+    "build": "expo export --platform all",
+    "backend:setup": "npm --prefix ../backend run setup",
+    "backend:test": "npm --prefix ../backend test",
+    "test:master-plan": "node --experimental-strip-types scripts/test-master-plan.cjs",
+    "test:apk-fields": "node --experimental-strip-types scripts/test-apk-fields.cjs"
+  },
+  "main": "expo-router/entry",
+  "workspaces": [
+    "buyer"
+  ],
   "dependencies": {
-    "axios": "^1.7.0",
-    "expo": "^58.0.0",
+    "@expo/vector-icons": "^15.0.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "~58.0.26",
     "expo-constants": "~58.0.16",
+    "expo-font": "~58.0.12",
     "expo-linking": "~58.0.17",
-    "expo-router": "~58.0.31",
+    "expo-router": "~58.0.32",
+    "expo-secure-store": "~58.0.3",
     "expo-status-bar": "~58.0.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "0.88.1",
     "react-native-safe-area-context": "~5.11.1",
     "react-native-screens": "~4.30.1",
-    "react-native-web": "^0.21.0",
-    "react-native-webview": "14.0.1",
-    "zustand": "^5.0.0"
+    "react-native-svg": "15.16.0",
+    "react-native-web": "^0.21.4",
+    "react-native-webview": "14.0.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
-    "@types/node": "^24.19.2",
     "@types/react": "~19.3.0",
-    "babel-preset-expo": "~58.0.0",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "~58.0.4",
     "typescript": "~6.0.3"
   }
 }
