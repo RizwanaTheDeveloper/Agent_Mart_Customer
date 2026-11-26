@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "AgentMart Seller",
+    "slug": "agentmart-seller",
+    "scheme": "agentmartseller",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "ios": { "supportsTablet": true },
+    "android": { "permissions": ["INTERNET", "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"] }
+  }
+}

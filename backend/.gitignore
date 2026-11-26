@@ -1,8 +1,2 @@
-node_modules/
-dist/
-coverage/
-.env
-*.tsbuildinfo
-.devdb/
-
-backups/
+# Track the public template; real environment files remain ignored by the root rules.
+!.env.example

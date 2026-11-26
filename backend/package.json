@@ -1,69 +1,77 @@
 {
-  "name": "agent-mart-admin-backend",
+  "name": "agentmart-backend",
   "version": "1.0.0",
-  "description": "Agent Mart | Platform Admin - NestJS + Prisma + PostgreSQL backend",
   "private": true,
-  "license": "UNLICENSED",
+  "type": "module",
+  "description": "AgentMart Buyer and Seller API, database schema, migrations and tests",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
-    "build": "nest build",
-    "start": "nest start",
+    "dev": "npm --prefix ../frontend/seller run dev --",
+    "start": "npm --prefix ../frontend/seller start --",
+    "setup": "node scripts/migrate-local.mjs",
+    "test": "node --test tests/buyer-api.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
     "start:dev": "nest start --watch",
-    "start:prod": "node dist/main",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "prisma:generate": "prisma generate",
+    "start:prod": "node dist/main.js",
+    "start:nest": "node dist/main.js",
+    "build": "npm run prisma:generate && nest build",
+    "lint": "eslint src/main.ts src/bootstrap.ts src/app.module.ts src/config src/prisma src/modules/health src/modules/auth src/common/filters/http-exception.filter.ts src/common/guards src/common/interfaces/auth.interface.ts prisma",
+    "test:nest": "npm run build && node --test test/unit/*.test.mjs test/e2e/*.test.mjs",
+    "prisma:generate": "node scripts/prisma-cli.mjs generate",
+    "prisma:validate": "node scripts/prisma-cli.mjs validate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "prisma:studio": "prisma studio",
-    "db:seed": "prisma db seed",
-    "admin:create": "ts-node prisma/scripts/create-admin.ts",
-    "test": "jest",
-    "test:e2e": "node test/smoke.e2e.js",
-    "dev:db": "node scripts/dev-db.mjs"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "testEnvironment": "node"
+    "prisma:seed": "node --env-file-if-exists=.env --experimental-strip-types prisma/seed.ts",
+    "postinstall": "node scripts/prisma-cli.mjs generate",
+    "test:auth": "npm run build && powershell -NoProfile -File scripts/test-auth.ps1",
+    "auth:setup": "node scripts/setup-auth-env.mjs",
+    "auth:demo": "node --env-file-if-exists=.env scripts/create-demo-accounts.mjs"
   },
   "dependencies": {
-    "@nestjs/common": "^11.2.9",
-    "@nestjs/config": "^4.0.4",
-    "@nestjs/core": "^11.2.9",
-    "@nestjs/platform-express": "^11.2.9",
-    "@nestjs/swagger": "^11.4.8",
-    "@nestjs/throttler": "^6.7.1",
-    "@prisma/client": "^6.19.3",
-    "bcryptjs": "^3.0.3",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.15.1",
-    "dotenv": "^18.0.10",
-    "helmet": "^8.3.0",
+    "drizzle-orm": "0.45.2",
+    "@nestjs/common": "11.2.11",
+    "@nestjs/core": "11.2.11",
+    "@nestjs/platform-express": "11.2.11",
+    "@nestjs/config": "4.0.4",
+    "@nestjs/swagger": "11.4.8",
+    "@nestjs/throttler": "6.8.0",
+    "@prisma/client": "6.19.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "class-validator": "^0.14.2",
+    "class-transformer": "^0.5.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/passport": "^11.0.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "@node-rs/argon2": "^2.0.0",
+    "cookie-parser": "^1.4.7"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.24",
-    "@nestjs/schematics": "^11.1.0",
-    "@nestjs/testing": "^11.2.9",
-    "@types/express": "^5.0.6",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^26.6.6",
-    "embedded-postgres": "^18.6.0-beta.19",
-    "jest": "^30.5.2",
-    "prisma": "^6.19.3",
-    "ts-jest": "^29.4.15",
-    "ts-node": "^10.9.2",
-    "typescript": "~5.8"
+    "@cloudflare/workers-types": "4.20260515.1",
+    "@types/node": "22.19.19",
+    "drizzle-kit": "0.31.10",
+    "miniflare": "4.20260515.0",
+    "typescript": "5.9.3",
+    "wrangler": "4.92.0",
+    "@nestjs/cli": "^11.0.0",
+    "prisma": "6.19.0",
+    "@types/express": "^5.0.0",
+    "eslint": "9.39.4",
+    "@eslint/js": "9.39.4",
+    "globals": "^16.0.0",
+    "typescript-eslint": "8.74.0",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/cookie-parser": "^1.4.0"
+  },
+  "overrides": {
+    "miniflare": {
+      "sharp": "0.35.4"
+    }
   }
 }

@@ -1,0 +1,39 @@
+{
+  "folders": [
+    {
+      "name": "AgentMart - Seller and Buyer",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/.wrangler": true,
+      "**/.sites-runtime": true,
+      "**/.next": true,
+      "**/.vinext": true,
+      "**/.expo": true,
+      "**/*.tsbuildinfo": true,
+      "**/outputs": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/package-lock.json": true
+    },
+    "typescript.tsdk": "frontend/seller/node_modules/typescript/lib",
+    "editor.tabSize": 2,
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "eslint.workingDirectories": [
+      "./frontend/seller",
+      "./frontend/buyer",
+      "./frontend/seller/expo"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint"
+    ]
+  }
+}

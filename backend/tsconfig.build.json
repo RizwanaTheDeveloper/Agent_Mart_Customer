@@ -1,5 +1,41 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src"],
-  "exclude": ["node_modules", "test", "dist", "prisma", "**/*spec.ts"]
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "incremental": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/main.ts",
+    "src/bootstrap.ts",
+    "src/app.module.ts",
+    "src/config/**/*.ts",
+    "src/prisma/**/*.ts",
+    "src/common/filters/http-exception.filter.ts",
+    "src/modules/health/**/*.ts",
+    "src/modules/auth/**/*.ts",
+    "src/common/guards/**/*.ts",
+    "src/common/interfaces/auth.interface.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "outputs",
+    "test",
+    "tests",
+    "prisma",
+    "src/routes",
+    "src/db",
+    "src/lib",
+    "src/types.ts"
+  ]
 }

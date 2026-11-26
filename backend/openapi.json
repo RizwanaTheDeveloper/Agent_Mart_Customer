@@ -1,0 +1,1590 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "AgentMart Buyer API",
+    "version": "1.0.0",
+    "description": "Extends the existing Seller Cloudflare Worker and D1 database. JSON bodies are limited to 64 KiB. Native clients use Bearer tokens; browser origins must be allowed. Seller administration remains at /api/workspace."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5173/api/buyer"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "buyerHealth",
+        "summary": "Check database readiness",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "registerBuyer",
+        "summary": "Create a Buyer account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Registration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many attempts; Retry-After: 900.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "loginBuyer",
+        "summary": "Sign in to a Buyer account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is incorrect.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many attempts; Retry-After: 900.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "currentBuyer",
+        "summary": "Get the current Buyer",
+        "security": [
+          {
+            "buyerSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  },
+                  "required": [
+                    "user"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "operationId": "logoutBuyer",
+        "summary": "Revoke the current session",
+        "security": [
+          {
+            "buyerSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/listings": {
+      "get": {
+        "operationId": "publishedListings",
+        "summary": "List only published, available seller properties",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "listings": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Listing"
+                      }
+                    },
+                    "nextOffset": {
+                      "type": "integer",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "listings",
+                    "nextOffset"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100000,
+              "default": 0
+            }
+          }
+        ]
+      }
+    },
+    "/state": {
+      "get": {
+        "operationId": "buyerState",
+        "summary": "Get this account's saves, comparison and private drafts",
+        "security": [
+          {
+            "buyerSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/State"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "saveBuyerState",
+        "summary": "Replace this account's state using its current version",
+        "security": [
+          {
+            "buyerSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/State"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/State"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Concurrent edit: refresh state before saving.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 64 KiB.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enquiries": {
+      "get": {
+        "operationId": "buyerEnquiries",
+        "summary": "List the latest 100 enquiries belonging to this Buyer",
+        "security": [
+          {
+            "buyerSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enquiries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Enquiry"
+                      }
+                    }
+                  },
+                  "required": [
+                    "enquiries"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "sendBuyerEnquiry",
+        "summary": "Deliver an enquiry to the property's Seller workspace",
+        "security": [
+          {
+            "buyerSession": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnquiryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Previously delivered request; no duplicate created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, expired or revoked session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin denied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Property unavailable, unpublished, or missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Request ID was used for another property.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many enquiries; Retry-After: 900.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable or migrations missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "buyerSession": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Opaque, revocable seven-day session returned by registration or login."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email"
+        ]
+      },
+      "Credentials": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "Registration": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 12,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "expires": {
+            "type": "integer",
+            "description": "Expiration in Unix milliseconds; sessions last seven days."
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": [
+          "token",
+          "expires",
+          "user"
+        ]
+      },
+      "Draft": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "propertyId",
+          "message",
+          "created"
+        ]
+      },
+      "State": {
+        "type": "object",
+        "properties": {
+          "saved": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 200
+          },
+          "compared": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 3
+          },
+          "drafts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Draft"
+            },
+            "maxItems": 100
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Version from the most recent GET/PUT. Stale updates return 409."
+          }
+        },
+        "required": [
+          "saved",
+          "compared",
+          "drafts",
+          "version"
+        ]
+      },
+      "Listing": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Plot",
+              "Apartment",
+              "House",
+              "Commercial",
+              "Farm land"
+            ]
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "Sale",
+              "Rent"
+            ]
+          },
+          "price": {
+            "type": "number"
+          },
+          "area": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "locality": {
+            "type": "string"
+          },
+          "facing": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bedrooms": {
+            "type": "number"
+          },
+          "district": {
+            "type": "string",
+            "description": "Public seller-supplied information; not independently verified."
+          },
+          "mandal": {
+            "type": "string",
+            "description": "Public seller-supplied information; not independently verified."
+          },
+          "plotCode": {
+            "type": "string",
+            "description": "Public seller-supplied information; not independently verified."
+          },
+          "survey": {
+            "type": "string",
+            "description": "Public seller-supplied information; not independently verified."
+          },
+          "approval": {
+            "type": "string",
+            "description": "Public seller-supplied information; not independently verified."
+          },
+          "seller": {
+            "type": "string",
+            "description": "Public seller-supplied information; not independently verified."
+          },
+          "road": {
+            "type": "number",
+            "description": "Road width in metres."
+          },
+          "latitude": {
+            "type": "number",
+            "description": "Only returned for a seller-confirmed public property pin."
+          },
+          "longitude": {
+            "type": "number",
+            "description": "Only returned for a seller-confirmed public property pin."
+          },
+          "photo": {
+            "type": "string",
+            "description": "Optional validated JPEG, PNG or WebP data image."
+          },
+          "amenities": {
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string"
+            }
+          },
+          "insights": {
+            "type": "object",
+            "description": "Allowlisted seller-supplied property facts. Missing values are empty strings. Private notes and contact details are excluded.",
+            "additionalProperties": false,
+            "properties": {
+              "projectName": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "builder": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "constructionStatus": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "possessionDate": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "areaBasis": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "carpetArea": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "builtUpArea": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "superArea": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "baths": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "balconies": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "floor": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "totalFloors": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "age": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "parking": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "lifts": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "maintenance": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "uds": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "rera": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "oc": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "cc": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "lengthM": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "widthM": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "roadStatus": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "water": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "power": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "drainage": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "landUse": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "boundary": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "expectedRent": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "furnishing": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "ownership": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "soil": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "irrigation": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "cultivation": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "commercialType": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "ceilingHeight": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "frontage": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "mortgage": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "disputes": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 250
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "type",
+          "purpose",
+          "price",
+          "area",
+          "unit",
+          "city",
+          "locality",
+          "facing",
+          "description",
+          "highlights"
+        ]
+      },
+      "EnquiryRequest": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Generate once per enquiry; reuse after timeouts to avoid duplicate delivery."
+          }
+        },
+        "required": [
+          "propertyId",
+          "message",
+          "requestId"
+        ]
+      },
+      "Enquiry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "propertyId",
+          "message",
+          "status",
+          "stage",
+          "created"
+        ]
+      }
+    }
+  }
+}

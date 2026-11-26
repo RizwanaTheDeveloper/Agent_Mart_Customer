@@ -1,6 +1,15 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true
-  }
+  "extends": "./buyer/tsconfig.json",
+  "include": [
+    "buyer/src/**/*.ts",
+    "buyer/src/**/*.tsx",
+    "buyer/index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "seller",
+    "buyer/node_modules",
+    "buyer/dist",
+    "buyer/reference"
+  ]
 }

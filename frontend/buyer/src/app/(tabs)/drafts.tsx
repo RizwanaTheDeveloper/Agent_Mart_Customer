@@ -1,0 +1,9 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
+import { Pressable, View } from 'react-native';
+import { AppText as Text } from '../../AppText';
+import { Empty, Intro, Screen } from '../../components';
+import { useBuyer } from '../../state';
+import { colors, styles as s } from '../../theme';
+
+export default function Drafts() { const store = useBuyer(); return <Screen><Intro title="Keep the conversation in mind." subtitle="Your private drafts and submitted enquiries. Drafts are not sent until you send an enquiry." />{store.live && store.enquiries.map(e => <View key={e.id} style={s.panel}><Text style={s.eyebrow}>SENT ENQUIRY - {e.status}</Text><Text style={s.heading}>{store.listings.find(p => p.id === e.propertyId)?.title || 'Property enquiry'}</Text><Text style={s.subtitle}>{e.message}</Text><Text style={s.location}>{e.stage} - {new Date(e.created).toLocaleDateString('en-IN')}</Text></View>)}{store.drafts.length ? store.drafts.map(d => { const p = store.listings.find(p => p.id === d.propertyId) || { id: d.propertyId, title: 'Property no longer published' }; return <View key={d.id} style={s.panel}><View style={s.between}><Text style={s.eyebrow}>PRIVATE DRAFT · NOT SENT</Text><Pressable accessibilityRole="button" accessibilityLabel={`Delete draft for ${p.title}`} onPress={() => store.deleteDraft(d.id)} style={{ padding: 10 }}><Ionicons name="trash-outline" size={21} color={colors.green} /></Pressable></View><Pressable accessibilityRole="button" onPress={() => router.push({ pathname: '/property/[id]', params: { id: p.id } })}><Text style={s.heading}>{p.title}</Text></Pressable><Text style={s.subtitle}>{d.message}</Text><Text style={s.location}>Saved {new Date(d.created).toLocaleDateString('en-IN')}</Text></View>; }) : <Empty title="Make a note for your next move." message="Open a property and save your questions as an enquiry draft." />}</Screen>; }

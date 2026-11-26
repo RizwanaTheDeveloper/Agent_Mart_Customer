@@ -1,98 +1,35 @@
-# Agent Mart | Platform Admin — App
+﻿# AgentMart frontend
 
-React Native + Expo (SDK 58) + TypeScript. One codebase runs on **Android, iOS, tablets and the web**, and the layout adapts to each screen size:
-
-| Width | Layout |
-|---|---|
-| < 1024 px (phones, portrait tablets) | Top bar with a menu button that opens a slide-out drawer. Record details open as a bottom sheet (phones) or a centred dialog (tablets). |
-| ≥ 1024 px | Fixed sidebar. Record details open in a dialog. |
-| ≥ 1280 px | Fixed sidebar, with record details in a side panel next to the list. |
-
-Light and dark mode follow the device setting.
-
-The app talks only to the real backend in `../backend`. There is no offline mode and no built-in sample data.
-
-## Run locally
+Run Expo directly from this folder:
 
 ```powershell
-# 1. Start the backend first (see ../backend/README.md)
-cd frontend
-npm install
-copy .env.example .env      # set EXPO_PUBLIC_API_URL if the API is not on localhost:3000
-
-npm run web                 # browser
-npm run android             # Android emulator / device (Expo Go or dev build)
-npm run ios                 # iOS simulator (macOS only)
+npx.cmd expo start
 ```
 
-| Where the app runs | `EXPO_PUBLIC_API_URL` |
-|---|---|
-| Browser on the same PC | `http://localhost:3000` |
-| Android emulator | `http://10.0.2.2:3000` |
-| Physical phone (same Wi-Fi) | `http://<PC LAN IP>:3000`, and allow port 3000 in the Windows firewall |
+This starts the single **AgentMart** app and its local seller service. Scan the QR code using Expo Go on the same Wi-Fi. Press `w` for the browser at http://localhost:8081. The opening screen lets you choose Buyer or Seller / Property owner. Ctrl+C stops Expo and the seller service it started. If the seller service was already running, Expo reuses it and leaves it running on exit.
 
-For the web app, also add its origin to the backend's `CORS_ORIGINS`, for example `http://localhost:8081`.
+`npm.cmd run dev` remains an alternative that opens the web preview automatically. From the repository root, `npm.cmd run dev` and `Start-Frontend.cmd` start the same app and service.
 
-## Production builds
+## Project structure
 
-- **Web:** run `npm run build:web`, which writes a static site to `dist-web/`. Host it on any static host or CDN. If you serve it from the API's domain, `EXPO_PUBLIC_API_URL` can be left unset.
-- **Android / iOS:** use EAS. First replace the placeholder URLs in [eas.json](eas.json) with your real HTTPS API addresses, then run:
-  ```powershell
-  npx eas-cli@latest build --profile production --platform android   # or ios / all
-  npx eas-cli@latest submit --profile production
-  ```
-  Bundle IDs are `com.agentmart.platformadmin` (iOS and Android) and are set in [app.json](app.json).
-- `EXPO_PUBLIC_API_URL` is compiled into the app, so you need a new build each time it changes. Production builds must use HTTPS.
+- `package.json` and `package-lock.json`: Expo dependencies and npm workspace installation.
+- `app.config.js`: AgentMart identity, assets and the existing Router source directory.
+- `metro.config.js`: Expo Metro configuration and development seller-service startup.
+- `buyer/src/`: shared AgentMart app with chooser, account screens, native buyer screens and seller WebView/iframe.
+- `buyer/assets/`: app assets.
+- `seller/`: existing Seller Studio web/API service with its separate React dependencies.
+- `outputs/seller-dev.log`: seller-service logs when started directly with Expo.
 
-## Scripts
+The Expo app and its `buyer` source package use one hoisted dependency tree. The web seller remains isolated because it uses a different React version. Install with `npm.cmd ci` here, and `npm.cmd --prefix seller ci` for the seller web service. Root `npm.cmd run install:all` also installs the applications.
 
-| Script | Purpose |
-|---|---|
-| `npm run web` / `android` / `ios` | Start the dev server for that platform |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run doctor` | `expo-doctor` (dependency and config checks) |
-| `npm run build:web` | Static production web build |
+## Workspaces and data
 
-## Folder structure
+Buyer discovery uses a fictional sample catalogue. Saves, comparison and unsent enquiry drafts stay on this device. Buyer tools include the supplied APK features in an isolated sample workspace; account workflows require a compatible HTTPS API.
 
-```
-frontend/
-├── App.tsx                     # Providers + auth gate + module router
-├── app.json / eas.json         # Expo + EAS build config (bundle IDs, plugins, env per profile)
-└── src/
-    ├── config.ts               # API URL + limits (page size, 750 KB, 100 features, reason ≥ 5)
-    ├── api/
-    │   ├── client.ts           # fetch wrapper: bearer token, timeouts, error mapping, automatic 428 → confirm → retry
-    │   ├── endpoints.ts        # Every backend endpoint, typed
-    │   └── types.ts            # Response shapes (mirror the backend map*() functions)
-    ├── state/
-    │   ├── auth.tsx            # Session: login, restore, expiry timer, revalidate on resume, logout
-    │   ├── elevation.tsx       # Global "Confirm it's you" (password) modal for HTTP 428
-    │   └── toast.tsx           # Notifications
-    ├── navigation/
-    │   ├── AppShell.tsx        # Sidebar (desktop) / drawer (phone), top bar, account menu
-    │   ├── modules.ts          # 15 modules: label, icon, group
-    │   └── useModuleRoute.ts   # Current module; mirrored to URL hash on web, Android back button
-    ├── resources/              # Shared list → detail → action engine
-    │   ├── ResourceScreen.tsx  # Search, pagination, pull-to-refresh, detail panel/sheet
-    │   ├── ActionDialog.tsx    # Audited action with reason / note / status / role
-    │   ├── configs.tsx         # Per-module rows, detail fields and actions (edit here to change UI)
-    │   ├── forms.tsx           # Plan, announcement and administrator create/edit forms
-    │   ├── FirmPlan.tsx        # Plan assignment on the firm detail
-    │   └── Imports.tsx         # File/paste → validate → review errors → commit
-    ├── screens/                # Login, Overview, Reports (chart/table/CSV), Settings
-    ├── components/             # UI kit, reason field
-    ├── theme/theme.ts          # Colours (light/dark), spacing, breakpoints
-    └── utils/                  # Formatting (en-IN, ₹), secure token storage, file pick/save
-```
+Seller uses a WebView on Android/iOS and an iframe on web, served locally on port 5173. Seller records load from the authenticated workspace API. Choose View seller / owner demo for the read-only sample workspace. Seller sign-in uses the existing hosted workspace. Set `EXPO_PUBLIC_SELLER_URL` to use a hosted seller service; local startup is skipped in that case. `SELLER_PORT` changes the local seller port.
 
-## Security behaviour
+For the older standalone seller-only Expo shell, use `npm.cmd run seller:expo`; its source remains in `seller/expo/`. It is not needed for the combined AgentMart app.
 
-- **Token storage:** the session token is kept in the iOS Keychain / Android Keystore (`expo-secure-store`), or in `sessionStorage` on the web, where it is cleared when the tab closes. It is never written to AsyncStorage.
-- **Session expiry:** sessions follow the server's 2-hour expiry. The app warns 5 minutes before expiry, signs out when the session expires, and re-checks the session whenever it returns from the background.
-- **Sensitive actions:** these get a 428 response from the server. The app shows a password prompt and then retries the original request unchanged.
-- **Permissions:** navigation, buttons and forms follow the `permissions` the server returns. The server enforces them independently, so the UI is only a convenience.
-- **Audit reason:** every change asks for a reason of at least 5 characters, which is stored in the audit log.
+## Validation
 
-> **Note:** sign-in and elevation use password only, with no second factor (authenticator code). This was removed at
-> the user's request; see the note in `../backend/README.md` for what that means and how to restore it.
+`npm.cmd run build` exports Android, iOS and web from this folder. In `buyer/`, run `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run verify` and `npm.cmd run verify:responsive`. Browser profiles check layouts and navigation; physical Expo Go testing and signed release builds remain separate.
