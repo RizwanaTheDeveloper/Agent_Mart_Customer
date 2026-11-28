@@ -8,7 +8,9 @@ COPY backend/prisma ./prisma
 COPY backend/scripts/prisma-cli.mjs ./scripts/prisma-cli.mjs
 RUN npm ci
 COPY backend/src ./src
-COPY backend/tsconfig*.json backend/nest-cli.json ./
+COPY backend/tsconfig.json ./tsconfig.json
+COPY backend/tsconfig.build.json ./tsconfig.build.json
+COPY backend/nest-cli.json ./nest-cli.json
 RUN npm run build && npm prune --omit=dev --ignore-scripts
 
 FROM node:24-bookworm-slim AS runtime
