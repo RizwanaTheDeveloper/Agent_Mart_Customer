@@ -1,4 +1,5 @@
 import { sellerAddress } from './seller/config';
+import { createReadCache } from './request-cache';
 import type { BuyerListing } from './data/listings';
 
 export type BuyerUser = { id: string; name: string; email: string };
@@ -26,7 +27,14 @@ export async function buyerApi<T>(path: string, options: { method?: string; toke
     throw new Error('Cannot reach the backend. Keep the server running and connect your phone to the same Wi-Fi.');
   } finally { clearTimeout(timer); }
 }
-export async function publishedListings() {
+// Only simultaneous public catalogue reads are shared. Manual refresh stays fresh.
+const readPublished = createReadCache<BuyerListing[]>(0, 1);
+export function publishedListings() {
+  const base = process.env.EXPO_PUBLIC_API_URL || sellerAddress().url;
+  return readPublished(base, loadPublishedListings);
+}
+
+async function loadPublishedListings() {
   const listings: BuyerListing[] = [];
   let offset: number | null = 0;
   do {

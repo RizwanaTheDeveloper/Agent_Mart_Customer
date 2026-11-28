@@ -56,6 +56,7 @@ async function freePort() {
     await page.getByLabel('Project name', { exact: true }).fill('APK field comparison');
     await page.getByLabel('Plot length (m)', { exact: true }).fill('20');
     await page.screenshot({ path: path.join(outputs, 'seller-property-fields.png'), fullPage: true });
+
     await page.getByRole('button', { name: 'Close dialog', exact: true }).click();
     await page.getByRole('button', { name: 'Research', exact: true }).click();
     await page.getByRole('button', { name: 'Investment scenarios', exact: true }).click();

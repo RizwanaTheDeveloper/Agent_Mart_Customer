@@ -1,8 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useBuyer } from '../../state';
 import { AppText as Text } from '../../AppText';
@@ -65,7 +64,7 @@ export default function BuyerTools() {
   }, [channel]);
   return <SafeAreaView edges={['left', 'right', 'bottom']} style={s.screen}>
     {showCards ? <ToolCards /> : <>
-    <View style={s.intro}><Text style={s.title}>{heading}</Text><Text style={s.note}>{description}</Text></View>
+    <View style={s.intro}><Text style={s.title}>{heading}</Text><Text style={s.note}>{description}</Text>{destination === 'map' && <Pressable accessibilityRole="button" onPress={() => router.navigate('/master-plan')} style={s.dismiss}><Text style={{ color: colors.green, fontWeight: '600' }}>Tap plots to see CRDA numbers</Text></Pressable>}</View>
     {!!error && <View style={s.error}><Text style={s.errorText}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setError('')} style={s.dismiss}><Text>Dismiss</Text></Pressable></View>}
     {html ? <ToolsView html={html} channel={channel} destination={destination} onError={showError} /> : !error && <ActivityIndicator color={colors.green} style={{ marginTop: 30 }} accessibilityLabel="Loading Buyer tools" />}
     </>}

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 // Professional navy and blue palette (matches Seller Studio).
-export const colors = { green: '#1e5aa8', deep: '#0f2a43', peach: '#f0c987', ink: '#1e2a3a', muted: '#66758a', line: '#e3e8ee', background: '#f4f6f9', surface: '#ffffff', sage: '#e8f0fa', soft: '#edf3fa' };
+export const colors = { green: '#1e5aa8', deep: '#0f2a43', peach: '#f0c987', saved: '#dc2626', ink: '#1e2a3a', muted: '#66758a', line: '#e3e8ee', background: '#f4f6f9', surface: '#ffffff', sage: '#e8f0fa', soft: '#edf3fa' };
 export const fonts = { regular: 'AgentMartBody', semibold: 'AgentMartBodySemiBold', bold: 'AgentMartBodyBold', heading: 'AgentMartHeading', headingBold: 'AgentMartHeadingExtraBold' };
 export const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },

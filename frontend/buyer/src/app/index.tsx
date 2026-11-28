@@ -1,4 +1,3 @@
-import { useBuyer } from '../state';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -22,11 +21,9 @@ const workspaces = [
 ];
 
 export default function WorkspaceHome() {
-  const store = useBuyer();
   const { width, fontScale } = useWindowDimensions();
   const availableWidth = width / Math.max(fontScale, 1);
   const compact = availableWidth < 760;
-  const compactHero = availableWidth < 1000;
   const narrow = availableWidth < 380;
   return <SafeAreaView edges={['left', 'right', 'bottom']} style={s.screen}>
     <ScrollView style={s.screen} contentInsetAdjustmentBehavior="never" contentContainerStyle={[s.content, compact && s.compactContent, narrow && s.narrowContent]}>
